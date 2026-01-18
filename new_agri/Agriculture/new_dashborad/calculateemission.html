@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Emission Calculator | Carbon Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+    .card img {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-green-50 min-h-screen">
+
+  <header class="bg-green-700 text-white py-6 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold">🚜 Select Emission Category</h1>
+        <p class="text-sm mt-1">Choose a farming activity to calculate its carbon footprint</p>
+      </div>
+      <a href="home1.html" class="ml-[-20px] bg-white text-green-800 px-5 py-3 rounded-lg shadow hover:bg-green-100 font-semibold text-sm">
+        🏠 Home
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <!-- First row with 3 cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="dairyviru.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100">
+        <img src="viru2.1.png" alt="Dairy" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🐄 Dairy</h2>
+          <p class="text-gray-600">Calculate emissions from milk production and dairy operations.</p>
+        </div>
+      </a>
+
+      <a href="livestockviru.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100">
+        <img src="viru2.2.png" alt="Livestock" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🐑 Livestock</h2>
+          <p class="text-gray-600">Estimate emissions from cattle, goats, and other livestock.</p>
+        </div>
+      </a>
+
+      <a href="riceviru.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100">
+        <img src="viru2.3.png" alt="Rice Farming" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🌾 Rice Farming</h2>
+          <p class="text-gray-600">Track methane emissions from rice cultivation and water usage.</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Second row: 2 cards centered below -->
+    <div class="flex flex-wrap justify-center gap-6 mt-10">
+      <a href="machinaryviru.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100 w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+        <img src="viru2.4.png" alt="Machinery" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🚜 Machinery</h2>
+          <p class="text-gray-600">Calculate CO₂ emissions from fuel-based farming equipment.</p>
+        </div>
+      </a>
+
+      <a href="fertilizerviru.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100 w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+        <img src="viru2.5.png" alt="Fertilizer & Pesticides" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🧪 Fertilizer & Pesticides</h2>
+          <p class="text-gray-600">Evaluate emissions from chemical and organic farming inputs.</p>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="bg-green-700 text-white text-center py-4">
+    <p>&copy; 2025 Carbon Tracker | Sustainable Farming Solutions</p>
+  </footer>
+
+</body>
+</html>

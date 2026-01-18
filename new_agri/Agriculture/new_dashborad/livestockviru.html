@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Livestock Emission Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f9f0;
+      padding: 30px;
+    }
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0, 100, 0, 0.1);
+    }
+    h2 {
+      color: #1b5e20;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #388e3c;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .result {
+      background: #e8f5e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result strong {
+      color: #2e7d32;
+    }
+    /* Dashboard button styling */
+    .btn-dashboard {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: #2e7d32;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Dashboard button added -->
+    <!-- <a href="dashboard.html" class="btn-dashboard">← Go to Dashboard</a> -->
+
+    <h2>Livestock Emission Calculator</h2>
+
+    <label for="animalType">Type of Animal:</label>
+    <select id="animalType">
+      <option value="goat">Goat</option>
+      <option value="sheep">Sheep</option>
+      <option value="poultry">Poultry</option>
+      <option value="pig">Pig</option>
+    </select>
+
+    <label for="animalCount">Number of Animals:</label>
+    <input type="number" id="animalCount" placeholder="Enter number of animals" />
+
+    <label for="ruminant">Is it a ruminant?</label>
+    <select id="ruminant">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+
+    <label for="feedType">Feed Type (optional):</label>
+    <input type="text" id="feedType" placeholder="e.g. grass, grains" />
+
+    <label for="manureMethod">Manure Handling Method:</label>
+    <select id="manureMethod">
+      <option value="open">Open Pit</option>
+      <option value="covered">Covered Storage</option>
+      <option value="compost">Compost</option>
+    </select>
+
+    <!-- <button onclick="calculateLivestockEmission()">Calculate Emission</button> -->
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="calculateLivestockEmission()">Calculate Emission</button>
+      <a href="calculateemission.html" class="btn-dashboard">← Back</a>
+    </div>
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateLivestockEmission() {
+      const count = parseInt(document.getElementById('animalCount').value) || 0;
+      const ruminant = document.getElementById('ruminant').value === 'yes';
+      const manureMethod = document.getElementById('manureMethod').value;
+
+      let ch4 = 0;
+      let n2o = 0;
+      let co2 = 0;
+
+      if (ruminant) {
+        ch4 = count * 30; // CH₄ from enteric fermentation
+      } else {
+        ch4 = count * 5; // lower CH₄ for non-ruminants
+      }
+
+      // N₂O from manure
+      const n2oFactor = manureMethod === 'open' ? 0.02 : manureMethod === 'compost' ? 0.01 : 0.005;
+      n2o = count * n2oFactor * 10; // simplified
+
+      // CO₂ estimate from feed production impact
+      co2 = count * 20; // simplified average CO₂ from feed and maintenance
+
+      const totalCO2e = (ch4 * 25) + (n2o * 298) + co2;
+
+      // Save total CO2e emission to localStorage
+      localStorage.setItem('livestockEmission', totalCO2e.toFixed(2));
+
+      document.getElementById('output').innerHTML = `
+        <strong>Results:</strong><br><br>
+        <strong>CH₄ (Methane):</strong> ${ch4.toFixed(2)} kg/year<br>
+        <strong>N₂O (Nitrous Oxide):</strong> ${n2o.toFixed(2)} kg/year<br>
+        <strong>CO₂ (Carbon Dioxide):</strong> ${co2.toFixed(2)} kg/year<br><br>
+        <strong>Total CO₂ Equivalent (CO₂e):</strong> ${totalCO2e.toFixed(2)} kg/year
+      `;
+    }
+  </script>
+</body>
+</html>

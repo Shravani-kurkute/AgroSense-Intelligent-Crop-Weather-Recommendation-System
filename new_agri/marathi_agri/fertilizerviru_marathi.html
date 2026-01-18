@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <title>खत आणि कीटकनाशक उत्सर्जन गणक</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      padding: 30px;
+    }
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #00796b;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button, .btn-dashboard {
+      background-color: #00796b;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .result {
+      background: #f1f8e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result strong {
+      color: #33691e;
+    }
+    .btn-dashboard {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>खत आणि कीटकनाशक उत्सर्जन गणक</h2>
+
+    <label for="fertilizerType">खताचा प्रकार:</label>
+    <select id="fertilizerType">
+      <option value="synthetic">कृत्रिम</option>
+      <option value="urea">युरिया</option>
+      <option value="compost">कंपोस्ट</option>
+    </select>
+
+    <label for="fertilizerAmount">खताचे प्रमाण (किग्रा/वर्ष):</label>
+    <input type="number" id="fertilizerAmount" placeholder="उदा. 1000" />
+
+    <label for="pesticideType">कीटकनाशकाचा प्रकार:</label>
+    <select id="pesticideType">
+      <option value="none">काहीही नाही</option>
+      <option value="organophosphate">ऑर्गनोफॉस्फेट</option>
+      <option value="pyrethroid">पायरेथ्रॉइड</option>
+      <option value="neonicotinoid">नियोनिकोटिनॉइड</option>
+      <option value="bio">जैव-कीटकनाशक</option>
+    </select>
+
+    <label for="pesticideAmount">कीटकनाशकाचे प्रमाण (लिटर/वर्ष):</label>
+    <input type="number" id="pesticideAmount" placeholder="उदा. 50" />
+
+    <label for="applicationMethod">प्रयोग पद्धत:</label>
+    <select id="applicationMethod">
+      <option value="manual">हाताने फवारणी</option>
+      <option value="tractor">ट्रॅक्टर फवारणी</option>
+      <option value="drone">ड्रोन फवारणी</option>
+      <option value="irrigation">सिंचनाद्वारे</option>
+    </select>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="calculateFertilizerEmissions()">उत्सर्जनाची गणना करा</button>
+      <a href="calculateemission_marathi.html" class="btn-dashboard">← परत</a>
+    </div>
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateFertilizerEmissions() {
+      const fertType = document.getElementById("fertilizerType").value;
+      const fertAmount = parseFloat(document.getElementById("fertilizerAmount").value) || 0;
+      const pesticideType = document.getElementById("pesticideType").value;
+      const pesticideAmount = parseFloat(document.getElementById("pesticideAmount").value) || 0;
+      const applicationMethod = document.getElementById("applicationMethod").value;
+
+      // Emission factors (simplified)
+      let n2oFactor = 0, co2Factor = 0, ch4Factor = 0;
+      if (fertType === "synthetic") {
+        n2oFactor = 0.015;
+        co2Factor = 1.0;
+      } else if (fertType === "urea") {
+        n2oFactor = 0.012;
+        co2Factor = 0.8;
+      } else if (fertType === "compost") {
+        n2oFactor = 0.005;
+        co2Factor = 0.4;
+        ch4Factor = 0.002;
+      }
+
+      let pesticideCO2Factor = 1.5;
+      if (pesticideType === "bio") pesticideCO2Factor = 0.5;
+      else if (pesticideType === "none") pesticideCO2Factor = 0;
+
+      // Calculate emissions
+      const n2oEmissions = fertAmount * n2oFactor;
+      const co2Emissions = fertAmount * co2Factor;
+      const ch4Emissions = fertAmount * ch4Factor;
+      const pesticideCO2 = pesticideAmount * pesticideCO2Factor;
+
+      // Calculate CO2 equivalent
+      const totalCO2e = (co2Emissions + pesticideCO2) + (n2oEmissions * 298) + (ch4Emissions * 25);
+
+      // Save total CO2e emission to localStorage
+      localStorage.setItem('fertilizerEmission', totalCO2e.toFixed(2));
+
+      // Display results
+      document.getElementById("output").innerHTML = `
+        <strong>परिणाम:</strong><br><br>
+        <strong>खतापासून CO₂:</strong> ${co2Emissions.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>खतापासून N₂O:</strong> ${n2oEmissions.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>कंपोस्टपासून CH₄ (असल्यास):</strong> ${ch4Emissions.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>कीटकनाशकापासून CO₂ (${pesticideType} द्वारे ${applicationMethod}):</strong> ${pesticideCO2.toFixed(2)} किग्रा/वर्ष<br><br>
+        <strong>एकूण CO₂ समतुल्य (CO₂e):</strong> ${totalCO2e.toFixed(2)} किग्रा/वर्ष
+      `;
+    }
+  </script>
+</body>
+</html>

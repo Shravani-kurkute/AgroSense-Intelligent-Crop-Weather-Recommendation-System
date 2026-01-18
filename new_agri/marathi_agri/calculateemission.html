@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>उत्सर्जन गणना निवडा | कार्बन ट्रॅकर</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+    .card img {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-green-50 min-h-screen">
+  <header class="bg-green-700 text-white py-6 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold">🚜 उत्सर्जन श्रेणी निवडा</h1>
+        <p class="text-sm mt-1">शेतीतील गतिविधी निवडा आणि त्याचा कार्बन फूटप्रिंट गणना करा</p>
+      </div>
+      <a href="/new carbon/new_agri/marathi_agri/home.html" class="ml-[-20px] bg-white text-green-800 px-5 py-3 rounded-lg shadow hover:bg-green-100 font-semibold text-sm">
+        🏠 मुख्य पृष्ठ
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <!-- First row with 3 cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="dairyviru_marathi.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100">
+        <img src="/new_agri/Agriculture/new_dashborad/viru2.1.png" alt="डेअरी" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🐄 डेअरी</h2>
+          <p class="text-gray-600">दूध उत्पादन आणि डेअरी संचालनापासून उत्सर्जनाची गणना करा.</p>
+        </div>
+      </a>
+
+      <a href="livestockviru_marathi.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100">
+        <img src="/new_agri/Agriculture/new_dashborad/viru2.2.png" alt="पशुधन" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🐑 पशुधन</h2>
+          <p class="text-gray-600">गाय, बकरी आणि इतर पशुधनापासून उत्सर्जनाचा अंदाज घ्या.</p>
+        </div>
+      </a>
+
+      <a href="riceviru_marathi.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100">
+        <img src="/new_agri/Agriculture/new_dashborad/viru2.3.png" alt="भातशेती" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🌾 भातशेती</h2>
+          <p class="text-gray-600">भातशेती आणि पाण्याच्या वापरापासून मीथेन उत्सर्जनाचा मागोवा घ्या.</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Second row: 2 cards centered below -->
+    <div class="flex flex-wrap justify-center gap-6 mt-10">
+      <a href="machinaryviru_marathi.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100 w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+        <img src="/new_agri/Agriculture/new_dashborad/viru2.4.png" alt="यंत्रसामग्री" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🚜 यंत्रसामग्री</h2>
+          <p class="text-gray-600">इंधन-आधारित शेती उपकरणांपासून CO₂ उत्सर्जनाची गणना करा.</p>
+        </div>
+      </a>
+
+      <a href="fertilizerviru_marathi.html" class="card bg-white rounded-xl shadow-md overflow-hidden hover:bg-green-100 w-full sm:w-2/3 md:w-1/2 lg:w-1/3">
+        <img src="/new_agri/Agriculture/new_dashborad/viru2.5.png" alt="खते आणि कीटकनाशके" class="w-full h-48 object-cover">
+        <div class="p-5 text-center">
+          <h2 class="text-xl font-semibold text-green-800 mb-2">🧪 खते आणि कीटकनाशके</h2>
+          <p class="text-gray-600">रासायनिक आणि सेंद्रिय शेती सामग्रीपासून उत्सर्जनाचे मूल्यांकन करा.</p>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="bg-green-700 text-white text-center py-4">
+    <p>© 2025 कार्बन ट्रॅकर | शाश्वत शेती समाधान</p>
+  </footer>
+
+</body>
+</html>

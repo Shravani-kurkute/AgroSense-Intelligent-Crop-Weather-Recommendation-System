@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <title>शेतकरी लॉगिन</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #f5f7e9, #e6f2e6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      min-height: 100vh;
+      background-image: url('loginbg.png');
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('loginbg.png') no-repeat center center/cover;
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    .login-container {
+      background: #fffef7;
+      border: 3px solid #a8d5a2;
+      border-radiusosus: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #6cbf6c, #355e3b);
+      opacity: 0.8;
+    }
+
+    .login-container h1 {
+      color: #355e3b;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .login-container h1::before {
+      content: '🌾';
+      font-size: 2.3rem;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      color: #2f4f2f;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    input[type="text"], input[type="tel"], input[type="hidden"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #a8d5a2;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
+      background: #f0fff0;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="tel"]:focus {
+      outline: none;
+      border-color: #4a8b44;
+      box-shadow: 0 0 5px rgba(74, 139, 68, 0.3);
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background: #4a8b44;
+      color: #fffef7;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #355e3b;
+      transform: translateY(-2px);
+    }
+
+    .back-link {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #4a8b44;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #355e3b;
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #2f4f2f;
+      font-weight: 500;
+    }
+
+    .keyboard-container {
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .keyboard-container small {
+      font-size: 0.9rem;
+      color: #2f4f2f;
+    }
+
+    .vk-row {
+      margin: 5px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .vk-key {
+      display: inline-block;
+      background: #e0ffe0;
+      border: 1px solid #a8d5a2;
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin: 2px;
+      cursor: pointer;
+      font-size: 1rem;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .vk-key:hover {
+      background: #c3e6c3;
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 0.9rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .login-container {
+        padding: 20px;
+        max-width: 90%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      input[type="text"], input[type="tel"], button {
+        font-size: 1rem;
+        padding: 10px;
+      }
+
+      .vk-key {
+        padding: 5px 8px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>शेतकरी लॉगिन</h1>
+
+  <form action="/new_agri/marathi_agri/home.html" method="get">
+      <label for="name_en">तुमचं नाव (इंग्रजीत टाइप करा)</label>
+      <input type="text" id="name_en" placeholder="उदा. Ramrao" required>
+      <div id="name-error" class="error">कृपया फक्त इंग्रजी अक्षरे टाइप करा</div>
+
+      <label for="name_mr">मराठीत नाव (बदल करू शकता)</label>
+      <input type="text" id="name_mr" name="name" placeholder="रामराव">
+
+      <div class="keyboard-container">
+        <small>किंवा कीबोर्ड वापरून टाइप करा:</small>
+        <div id="virtual-keyboard">
+          <div class="vk-row">
+            <span class="vk-key">अ</span><span class="vk-key">आ</span><span class="vk-key">इ</span><span class="vk-key">ई</span><span class="vk-key">उ</span><span class="vk-key">ऊ</span><span class="vk-key">ऋ</span><span class="vk-key">ए</span><span class="vk-key">ऐ</span><span class="vk-key">ओ</span><span class="vk-key">औ</span>
+          </div>
+          <div class="vk-row">
+            <span class="vk-key">क</span><span class="vk-key">ख</span><span class="vk-key">ग</span><span class="vk-key">घ</span><span class="vk-key">ङ</span><span class="vk-key">च</span><span class="vk-key">छ</span><span class="vk-key">ज</span><span class="vk-key">झ</span><span class="vk-key">ञ</span>
+          </div>
+          <div class="vk-row">
+            <span class="vk-key">ट</span><span class="vk-key">ठ</span><span class="vk-key">ड</span><span class="vk-key">ढ</span><span class="vk-key">ण</span><span class="vk-key">त</span><span class="vk-key">थ</span><span class="vk-key">द</span><span class="vk-key">ध</span><span class="vk-key">न</span>
+          </div>
+          <div class="vk-row">
+            <span class="vk-key">प</span><span class="vk-key">फ</span><span class="vk-key">ब</span><span class="vk-key">भ</span><span class="vk-key">म</span><span class="vk-key">य</span><span class="vk-key">र</span><span class="vk-key">ल</span><span class="vk-key">व</span>
+          </div>
+          <div class="vk-row">
+            <span class="vk-key">श</span><span class="vk-key">ष</span><span class="vk-key">स</span><span class="vk-key">ह</span><span class="vk-key">क्ष</span><span class="vk-key">त्र</span><span class="vk-key">ज्ञ</span>
+          </div>
+          <div class="vk-row">
+            <span class="vk-key">ा</span><span class="vk-key">ि</span><span class="vk-key">ी</span><span class="vk-key">ु</span><span class="vk-key">ू</span><span class="vk-key">ृ</span><span class="vk-key">े</span><span class="vk-key">ै</span><span class="vk-key">ो</span><span class="vk-key">ौ</span><span class="vk-key">ं</span><span class="vk-key">ः</span><span class="vk-key">ँ</span>
+          </div>
+          <div class="vk-row">
+            <span class="vk-key">्</span><span class="vk-key">।</span><span class="vk-key">़</span>
+          </div>
+        </div>
+      </div>
+
+      <label for="mobile_mr">मोबाईल क्रमांक</label>
+      <input type="tel" id="mobile_mr" placeholder="उदा. ९८२३००००००" required>
+      <input type="hidden" id="mobile_en" name="mobile">
+      <div id="mobile-error" class="error">कृपया वैध १० अंकांचा मोबाईल क्रमांक टाइप करा</div>
+
+      <div class="keyboard-container">
+        <small>किंवा कीबोर्ड वापरून क्रमांक टाइप करा:</small>
+        <div id="mobile-keyboard">
+          <div class="vk-row">
+            <span class="vk-key">०</span><span class="vk-key">१</span><span class="vk-key">२</span><span class="vk-key">३</span><span class="vk-key">४</span>
+            <span class="vk-key">५</span><span class="vk-key">६</span><span class="vk-key">७</span><span class="vk-key">८</span><span class="vk-key">९</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" onclick="validateForm()">लॉगिन करा</button>
+    </form>
+
+    <a href="language.html" class="back-link">← परत भाषा निवडीवर जा</a>
+    <div class="footer">
+      ही माहिती सुरक्षित आहे.
+    </div>
+  </div>
+
+  <script>
+    const enInput = document.getElementById("name_en");
+    const mrInput = document.getElementById("name_mr");
+    const mobileMrInput = document.getElementById("mobile_mr");
+    const mobileEnInput = document.getElementById("mobile_en");
+    const nameKeys = document.querySelectorAll("#virtual-keyboard .vk-key");
+    const mobileKeys = document.querySelectorAll("#mobile-keyboard .vk-key");
+
+    // Marathi digit mapping (same as Hindi, uses Devanagari)
+    const digitMap = {
+      '0': '०', '1': '१', '2': '२', '3': '३', '4': '४',
+      '5': '५', '6': '६', '7': '७', '8': '८', '9': '९'
+    };
+    const reverseDigitMap = Object.fromEntries(
+      Object.entries(digitMap).map(([k, v]) => [v, k])
+    );
+
+    // Validate English name input
+    enInput.addEventListener("input", function() {
+      if (/^[a-zA-Z\s]*$/.test(this.value)) {
+        document.getElementById("name-error").style.display = "none";
+      } else {
+        document.getElementById("name-error").style.display = "block";
+        this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+      }
+    });
+
+    // Transliterate English to Marathi for name
+    let nameTimer;
+    enInput.addEventListener("input", () => {
+      clearTimeout(nameTimer);
+      nameTimer = setTimeout(() => {
+        const text = enInput.value;
+        if (!text.trim()) {
+          mrInput.value = "";
+          return;
+        }
+
+        fetch(`https://inputtools.google.com/request?text=${encodeURIComponent(text)}&itc=mr-t-i0-und&num=1`)
+          .then(res => {
+            if (!res.ok) throw new Error('Network response was not ok');
+            return res.json();
+          })
+          .then(data => {
+            if (data[0] === "SUCCESS") {
+              mrInput.value = data[1][0][1][0];
+            } else {
+              console.error("Transliteration failed:", data);
+              mrInput.value = text; // Fallback to original input
+            }
+          })
+          .catch(err => {
+            console.error("Transliteration error:", err);
+            mrInput.value = text; // Fallback to original input
+          });
+      }, 500);
+    });
+
+    // Convert English digits to Marathi digits for mobile
+    mobileMrInput.addEventListener("input", function() {
+      const input = this.value;
+      let marathiDigits = "";
+      let englishDigits = "";
+      for (let char of input) {
+        if (/[0-9]/.test(char)) {
+          marathiDigits += digitMap[char] || char;
+          englishDigits += char;
+        } else if (reverseDigitMap[char]) {
+          marathiDigits += char;
+          englishDigits += reverseDigitMap[char];
+        }
+      }
+      this.value = marathiDigits;
+      mobileEnInput.value = englishDigits;
+
+      const mobileError = document.getElementById("mobile-error");
+      if (/^[०-९]{0,10}$/.test(marathiDigits)) {
+        mobileError.style.display = "none";
+      } else {
+        mobileError.style.display = "block";
+      }
+    });
+
+    // Virtual keyboard for name
+    nameKeys.forEach(key => {
+      key.addEventListener("click", () => {
+        mrInput.value += key.textContent;
+      });
+    });
+
+    // Virtual keyboard for mobile
+    mobileKeys.forEach(key => {
+      key.addEventListener("click", () => {
+        if (mobileMrInput.value.length < 10) {
+          mobileMrInput.value += key.textContent;
+          mobileEnInput.value += reverseDigitMap[key.textContent];
+        }
+      });
+    });
+
+    // Form validation
+    function validateForm() {
+      const mobileError = document.getElementById("mobile-error");
+      const mobileEn = mobileEnInput.value;
+
+      if (!/^[0-9]{10}$/.test(mobileEn)) {
+        mobileError.style.display = "block";
+        return false;
+      } else {
+        mobileError.style.display = "none";
+        alert("लॉगिन यशस्वी! | Login successful!");
+        return true;
+      }
+    }
+  </script>
+</body>
+</html>

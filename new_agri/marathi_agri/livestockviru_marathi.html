@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <title>पशुधन उत्सर्जन गणक</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f9f0;
+      padding: 30px;
+    }
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0, 100, 0, 0.1);
+    }
+    h2 {
+      color: #1b5e20;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button, .btn-dashboard {
+      background-color: #388e3c;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .result {
+      background: #e8f5e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result strong {
+      color: #2e7d32;
+    }
+    .btn-dashboard {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>पशुधन उत्सर्जन गणक</h2>
+
+    <label for="animalType">पशुचा प्रकार:</label>
+    <select id="animalType">
+      <option value="goat">शेळी</option>
+      <option value="sheep">मेंढी</option>
+      <option value="poultry">कुक्कुटपालन</option>
+      <option value="pig">डुक्कर</option>
+    </select>
+
+    <label for="animalCount">पशुंची संख्या:</label>
+    <input type="number" id="animalCount" placeholder="पशुंची संख्या प्रविष्ट करा" required />
+
+    <label for="ruminant">हा जुगाली करणारा आहे का?</label>
+    <select id="ruminant">
+      <option value="yes">होय</option>
+      <option value="no">नाही</option>
+    </select>
+
+    <label for="feedType">खाद्य प्रकार (पर्यायी):</label>
+    <input type="text" id="feedType" placeholder="उदा. गवत, धान्य" />
+
+    <label for="manureMethod">शेण व्यवस्थापन पद्धत:</label>
+    <select id="manureMethod">
+      <option value="open">खुला खड्डा</option>
+      <option value="covered">झाकलेला साठवण</option>
+      <option value="compost">कंपोस्ट</option>
+    </select>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="calculateLivestockEmission()">उत्सर्जनाची गणना करा</button>
+      <a href="calculateemission_marathi.html" class="btn-dashboard">← परत</a>
+    </div>
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateLivestockEmission() {
+      const count = parseInt(document.getElementById('animalCount').value) || 0;
+      const ruminant = document.getElementById('ruminant').value === 'yes';
+      const manureMethod = document.getElementById('manureMethod').value;
+
+      let ch4 = 0;
+      let n2o = 0;
+      let co2 = 0;
+
+      if (ruminant) {
+        ch4 = count * 30; // CH₄ from enteric fermentation
+      } else {
+        ch4 = count * 5; // lower CH₄ for non-ruminants
+      }
+
+      // N₂O from manure
+      const n2oFactor = manureMethod === 'open' ? 0.02 : manureMethod === 'compost' ? 0.01 : 0.005;
+      n2o = count * n2oFactor * 10; // simplified
+
+      // CO₂ estimate from feed production impact
+      co2 = count * 20; // simplified average CO₂ from feed and maintenance
+
+      const totalCO2e = (ch4 * 25) + (n2o * 298) + co2;
+
+      // Save total CO2e emission to localStorage
+      localStorage.setItem('livestockEmission', totalCO2e.toFixed(2));
+
+      document.getElementById('output').innerHTML = `
+        <strong>परिणाम:</strong><br><br>
+        <strong>CH₄ (मीथेन):</strong> ${ch4.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>N₂O (नायट्रस ऑक्साइड):</strong> ${n2o.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>CO₂ (कार्बन डायऑक्साइड):</strong> ${co2.toFixed(2)} किग्रा/वर्ष<br><br>
+        <strong>एकूण CO₂ समतुल्य (CO₂e):</strong> ${totalCO2e.toFixed(2)} किग्रा/वर्ष
+      `;
+    }
+  </script>
+</body>
+</html>

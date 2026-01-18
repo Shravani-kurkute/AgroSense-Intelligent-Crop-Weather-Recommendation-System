@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriPredict</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            position: relative;
+            right: -48%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            height: 100vh;
+            background-color: #000; /* Black background as fallback */
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        /* Video background styling */
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure video covers the entire background */
+            z-index: -1; /* Place video behind all content */
+            opacity: 0.5; /* Slight transparency to blend with container */
+        }
+
+        .container {
+            position: relative;
+            right: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            color: white;
+            background: linear-gradient(135deg, rgba(154, 122, 6, 0.605), rgba(0, 128, 128, 0.4), rgba(196, 198, 198, 0.4)); /* Existing gradient */
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: 3px solid white;
+            z-index: 1; /* Ensure container is above video */
+        }
+
+        .container img {
+            max-width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            border: 3px solid white;
+        }
+
+        .content {
+            margin-left: 40px;
+        }
+
+        .content h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .content p {
+            font-size: 1.2em;
+            margin: 10px 0 20px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .buttons .get-started {
+            background-color: transparent;
+            border: 1px solid white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .buttons .get-started:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .buttons .log-in {
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .buttons .log-in:hover {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .content {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background video -->
+    <video autoplay muted loop playsinline>
+        <source src="1.mov" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="container">
+        <img src="agriculture.png" alt="Graph showing carbon emission predictions">
+        <div class="content">
+            <h1>AgriPredict</h1>
+            <p>Powering a Greener Future</p>
+            <div class="buttons">
+                <a class="get-started" href="homepage.html">Get started</a>
+                <a class="log-in" href="homepage.html">Log in</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

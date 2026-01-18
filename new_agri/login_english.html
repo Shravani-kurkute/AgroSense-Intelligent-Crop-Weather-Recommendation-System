@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farmer Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #f5f7e9, #e6f2e6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      min-height: 100vh;
+      background-image: url('loginbg.png');
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('loginbg.png') no-repeat center center/cover;
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    .login-container {
+      background: #fffef7;
+      border: 3px solid #a8d5a2;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #6cbf6c, #355e3b);
+      opacity: 0.8;
+    }
+
+    .login-container h1 {
+      color: #355e3b;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .login-container h1::before {
+      content: '🌾';
+      font-size: 2.3rem;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      color: #2f4f2f;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #a8d5a2;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #333;
+      background: #f0fff0;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="tel"]:focus {
+      outline: none;
+      border-color: #4a8b44;
+      box-shadow: 0 0 5px rgba(74, 139, 68, 0.3);
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      background: #4a8b44;
+      color: #fffef7;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #355e3b;
+      transform: translateY(-2px);
+    }
+
+    .back-link {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #4a8b44;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #355e3b;
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #2f4f2f;
+      font-weight: 500;
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 0.9rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .login-container {
+        padding: 20px;
+        max-width: 90%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      input[type="text"], input[type="tel"], button {
+        font-size: 1rem;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Farmer Login</h1>
+
+    <form action="/new_agri/Agriculture/new_dashborad/home1.html" method="get">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="e.g., Ramrao" required>
+      <div id="name-error" class="error">Please enter only English letters, spaces, dots, or hyphens</div>
+
+      <label for="mobile">Mobile Number</label>
+      <input type="tel" id="mobile" name="mobile" placeholder="e.g., 9823000000" pattern="[0-9]{10}" required>
+      <div id="mobile-error" class="error">Please enter a valid 10-digit mobile number</div>
+
+      <button type="submit" onclick="validateForm()">Login</button>
+    </form>
+
+    <a href="language.html" class="back-link">← Back to Language Selection</a>
+    <div class="footer">
+      Your information is secure.
+    </div>
+  </div>
+
+  <script>
+    const nameInput = document.getElementById("name");
+    const mobileInput = document.getElementById("mobile");
+
+    // Validate name input
+    nameInput.addEventListener("input", function() {
+      if (/^[a-zA-Z\s.-]*$/.test(this.value)) {
+        document.getElementById("name-error").style.display = "none";
+      } else {
+        document.getElementById("name-error").style.display = "block";
+        this.value = this.value.replace(/[^a-zA-Z\s.-]/g, "");
+      }
+    });
+
+    // Validate mobile input
+    mobileInput.addEventListener("input", function() {
+      const mobileError = document.getElementById("mobile-error");
+      if (/^[0-9]{0,10}$/.test(this.value)) {
+        mobileError.style.display = "none";
+      } else {
+        mobileError.style.display = "block";
+        this.value = this.value.replace(/[^0-9]/g, "").slice(0, 10);
+      }
+    });
+
+    // Form validation
+    function validateForm() {
+      const nameError = document.getElementById("name-error");
+      const mobileError = document.getElementById("mobile-error");
+
+      let isValid = true;
+
+      if (!/^[a-zA-Z\s.-]{1,}$/.test(nameInput.value)) {
+        nameError.style.display = "block";
+        isValid = false;
+      } else {
+        nameError.style.display = "none";
+      }
+
+      if (!/^[0-9]{10}$/.test(mobileInput.value)) {
+        mobileError.style.display = "block";
+        isValid = false;
+      } else {
+        mobileError.style.display = "none";
+      }
+
+      if (isValid) {
+        alert("Login successful!");
+        return true;
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>

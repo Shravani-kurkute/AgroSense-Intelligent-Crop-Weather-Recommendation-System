@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Machinery Emission Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      padding: 30px;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #00796b;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .result {
+      background: #f1f8e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+
+    .result strong {
+      color: #33691e;
+    }
+
+    /* Dashboard button styling */
+    .btn-dashboard {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: #00796b;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Dashboard button added -->
+    <!-- <a href="dashboard.html" class="btn-dashboard">← Go to Dashboard</a> -->
+
+    <h2>Machinery Emission Calculator</h2>
+
+    <label for="machineType">Type of Machinery:</label>
+    <!-- <input type="text" id="machineType" placeholder="e.g. Tractor, Pump"> -->
+     <select id="machineType">
+      <option value="diesel">Tractor</option>
+      <option value="petrol">Pump</option>
+     </select>
+
+
+    <label for="fuelType">Fuel Type:</label>
+    <select id="fuelType">
+      <option value="diesel">Diesel</option>
+      <option value="petrol">Petrol</option>
+    </select>
+
+    <label for="fuelUsed">Fuel Used per Month (liters):</label>
+    <input type="number" id="fuelUsed" placeholder="e.g. 100" required>
+
+    <label for="hoursUsed">Total Hours Used per Month (optional):</label>
+    <input type="number" id="hoursUsed" placeholder="e.g. 40">
+
+    <!-- <button onclick="calculateMachineryEmissions()">Calculate Emission</button> -->
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="calculateMachineryEmissions()">Calculate Emission</button>
+      <a href="calculateemission.html" class="btn-dashboard">← Back</a>
+    </div>
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateMachineryEmissions() {
+      const fuelUsed = parseFloat(document.getElementById('fuelUsed').value) || 0;
+      const fuelType = document.getElementById('fuelType').value;
+
+      const co2Factor = fuelType === "diesel" ? 2.68 : 2.31;
+      const ch4Factor = 0.00005;
+      const n2oFactor = 0.0001;
+
+      const co2 = fuelUsed * co2Factor * 12;  // annual
+      const ch4 = fuelUsed * ch4Factor * 12;
+      const n2o = fuelUsed * n2oFactor * 12;
+
+      const co2e = co2 + (ch4 * 25) + (n2o * 298);
+
+      // Save total CO2e emission to localStorage
+      localStorage.setItem('machineryEmission', co2e.toFixed(2));
+
+      document.getElementById('output').innerHTML = `
+        <strong>Results:</strong><br><br>
+        <strong>CO₂:</strong> ${co2.toFixed(2)} kg/year<br>
+        <strong>CH₄:</strong> ${ch4.toFixed(4)} kg/year<br>
+        <strong>N₂O:</strong> ${n2o.toFixed(4)} kg/year<br><br>
+        <strong>Total CO₂ Equivalent (CO₂e):</strong> ${co2e.toFixed(2)} kg/year
+      `;
+    }
+  </script>
+
+</body>
+</html>

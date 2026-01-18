@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rice Farming Emission Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4fcf4;
+      padding: 30px;
+    }
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0, 100, 0, 0.1);
+    }
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #43a047;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .result {
+      background: #e8f5e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result strong {
+      color: #1b5e20;
+    }
+    /* Dashboard button styling */
+    .btn-dashboard {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: #2e7d32;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Dashboard button added -->
+    <!-- <a href="dashboard.html" class="btn-dashboard">← Go to Dashboard</a> -->
+
+    <h2>Rice Farming Emission Calculator</h2>
+
+    <label for="area">Cultivation Area (hectares):</label>
+    <input type="number" id="area" placeholder="Enter area in hectares" />
+
+    <label for="flooding">Flooding Duration:</label>
+    <select id="flooding">
+      <option value="continuous">Continuous</option>
+      <option value="intermittent">Intermittent</option>
+    </select>
+
+    <label for="cropsPerYear">Crops per Year:</label>
+    <select id="cropsPerYear">
+      <option value="1">Single</option>
+      <option value="2">Double</option>
+      <option value="3">Triple</option>
+    </select>
+
+    <label for="fertilizer">Fertilizer Use (kg/ha/year):</label>
+    <input type="number" id="fertilizer" placeholder="e.g. 100" />
+
+    <label for="fuel">Fuel for Irrigation Pumps (liters/month):</label>
+    <input type="number" id="fuel" placeholder="e.g. 50" />
+
+    <!-- <button onclick="calculateRiceEmission()">Calculate Emission</button> -->
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+       <button onclick="calculateRiceEmission()">Calculate Emission</button>
+       <a href="calculateemission.html" class="btn-dashboard">← Back</a>
+    </div>
+
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateRiceEmission() {
+      const area = parseFloat(document.getElementById('area').value) || 0;
+      const flooding = document.getElementById('flooding').value;
+      const crops = parseInt(document.getElementById('cropsPerYear').value) || 0;
+      const fertilizer = parseFloat(document.getElementById('fertilizer').value) || 0;
+      const fuel = parseFloat(document.getElementById('fuel').value) || 0;
+
+      // CH₄ from rice paddies
+      const ch4Factor = flooding === 'continuous' ? 1.5 : 0.9;
+      const ch4 = area * crops * ch4Factor * 60; // simplified kg/year
+
+      // N₂O from fertilizer
+      const n2o = area * (fertilizer * 0.01); // 1% of N converts to N₂O
+
+      // CO₂ from irrigation fuel use
+      const co2 = fuel * 12 * 2.68; // diesel CO₂ emission factor (kg/l)
+
+      const totalCO2e = (ch4 * 25) + (n2o * 298) + co2;
+
+      // Save total CO2e emission to localStorage
+      localStorage.setItem('riceEmission', totalCO2e.toFixed(2));
+
+      document.getElementById('output').innerHTML = `
+        <strong>Results:</strong><br><br>
+        <strong>CH₄ (Methane):</strong> ${ch4.toFixed(2)} kg/year<br>
+        <strong>N₂O (Nitrous Oxide):</strong> ${n2o.toFixed(2)} kg/year<br>
+        <strong>CO₂ (Carbon Dioxide from fuel):</strong> ${co2.toFixed(2)} kg/year<br><br>
+        <strong>Total CO₂ Equivalent (CO₂e):</strong> ${totalCO2e.toFixed(2)} kg/year
+      `;
+    }
+  </script>
+</body>
+</html>

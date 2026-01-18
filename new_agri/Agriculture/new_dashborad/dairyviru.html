@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dairy Methane Emission Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef5f1;
+      padding: 30px;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button, .btn-dashboard {
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .btn-dashboard {
+      margin-bottom: 20px;
+    }
+    .result {
+      background: #f1f1f1;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result strong {
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Dashboard button -->
+    <!-- <a href="dashboard.html" class="btn-dashboard">← Go to Dashboard</a> -->
+
+    <h2>Dairy Methane Emission Calculator</h2>
+
+    <label for="cows">Number of Cows:</label>
+    <input type="number" id="cows" placeholder="Enter number of cows" required>
+
+    <label for="manure">Manure per Cow per Day (kg):</label>
+    <input type="number" id="manure" placeholder="e.g. 30" required>
+
+    <label for="storage">Manure Storage Type:</label>
+    <select id="storage">
+      <option value="open">Open Storage</option>
+      <option value="covered">Covered Storage</option>
+    </select>
+
+    <label for="days">Storage Duration (days):</label>
+    <input type="number" id="days" placeholder="e.g. 365" required>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="calculateEmission()">Calculate Emission</button>
+      <a href="calculateemission.html" class="btn-dashboard">← Back</a>
+    </div>
+
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateEmission() {
+      const cows = parseInt(document.getElementById('cows').value);
+      const manurePerDay = parseFloat(document.getElementById('manure').value);
+      const storage = document.getElementById('storage').value;
+      const storageDays = parseInt(document.getElementById('days').value);
+
+      // Methane from enteric fermentation (55 kg/year per cow)
+      const methaneEnteric = cows * 55;
+
+      // Methane from manure storage
+      const factor = storage === "open" ? 0.025 : 0.01;
+      const methaneManure = cows * manurePerDay * storageDays * factor;
+
+      // Nitrous oxide (simplified) from manure nitrogen
+      const nitrousOxide = cows * 0.5 * 0.02;
+
+      // CO2e equivalents
+      const totalCH4 = methaneEnteric + methaneManure;
+      const totalCO2e = (totalCH4 * 25) + (nitrousOxide * 298);
+
+      // Save to localStorage for dashboard
+      localStorage.setItem("dairyEmission", totalCO2e.toFixed(2));
+
+      document.getElementById('output').innerHTML = `
+        <strong>Results:</strong><br><br>
+        <strong>Methane (CH₄) from Enteric Fermentation:</strong> ${methaneEnteric.toFixed(2)} kg/year<br>
+        <strong>Methane (CH₄) from Manure:</strong> ${methaneManure.toFixed(2)} kg/year<br>
+        <strong>Nitrous Oxide (N₂O):</strong> ${nitrousOxide.toFixed(2)} kg/year<br><br>
+        <strong>Total CO₂ Equivalent (CO₂e):</strong> ${totalCO2e.toFixed(2)} kg/year
+      `;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <title>उत्सर्जन डॅशबोर्ड चार्ट</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f8e9;
+      padding: 30px;
+    }
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #33691e;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .chart-container {
+      margin: 30px 0;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .back-button:hover {
+      background-color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>उत्सर्जन डॅशबोर्ड चार्ट</h2>
+
+    <div class="chart-container">
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="pieChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="doughnutChart"></canvas>
+    </div>
+
+    <a class="back-button" href="villagedash_marathi.html">← सारांशावर परत</a>
+  </div>
+
+  <script>
+    const dairy = parseFloat(localStorage.getItem('dairyEmission')) || 0;
+    const livestock = parseFloat(localStorage.getItem('livestockEmission')) || 0;
+    const rice = parseFloat(localStorage.getItem('riceEmission')) || 0;
+    const machinery = parseFloat(localStorage.getItem('machineryEmission')) || 0;
+    const fertilizer = parseFloat(localStorage.getItem('fertilizerEmission')) || 0;
+
+    const labels = ['दुग्धव्यवसाय', 'पशुधन', 'भात', 'यंत्रसामग्री', 'खत'];
+    const data = [dairy, livestock, rice, machinery, fertilizer];
+
+    const colors = ['#a5d6a7', '#ffcc80', '#90caf9', '#f48fb1', '#ce93d8'];
+
+    // Bar Chart
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'उत्सर्जन (किग्रा CO₂e/वर्ष)',
+          data: data,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'उत्सर्जन विश्लेषण - बार चार्ट'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Pie Chart
+    new Chart(document.getElementById('pieChart'), {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'उत्सर्जन',
+          data: data,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'उत्सर्जन प्रमाण - पाय चार्ट'
+          }
+        }
+      }
+    });
+
+    // Doughnut Chart
+    new Chart(document.getElementById('doughnutChart'), {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'उत्सर्जन',
+          data: data,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'उत्सर्जन वितरण - डोनट चार्ट'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

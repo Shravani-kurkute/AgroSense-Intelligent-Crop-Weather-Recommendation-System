@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Village Emission Summary</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f8e9;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 850px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    h2 {
+      color: #33691e;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .emission-box {
+      background: #e8f5e9;
+      border-left: 5px solid #66bb6a;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+
+    .emission-box strong {
+      color: #2e7d32;
+    }
+
+    .total-box {
+      background: #c8e6c9;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #1b5e20;
+    }
+
+    .nav-buttons {
+      margin-bottom: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      background-color: #388e3c;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #2e7d32;
+    }
+
+    .reset-button {
+      display: block;
+      background-color: #d32f2f;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      margin: 30px auto 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .reset-button:hover {
+      background-color: #b71c1c;
+    }
+
+    .dashboard-link {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .dashboard-link a {
+      text-decoration: none;
+      background-color: #2e7d32;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .dashboard-link a:hover {
+      background-color: #1b5e20;
+    }
+
+    @media (max-width: 600px) {
+      .dashboard-link {
+        position: static;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .total-box {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top-right: Home and Dashboard buttons -->
+    <div class="dashboard-link">
+      <a href="home1.html">🏠 Home</a>
+      <a href="villagedashboard.html">📊 Dashboard</a>
+    </div>
+
+    <h2>🌾 Village Emission Summary</h2>
+
+    <div class="nav-buttons">
+      <a href="dairyviru.html">🥛 Dairy</a>
+      <a href="livestockviru.html">🐄 Livestock</a>
+      <a href="riceviru.html">🌾 Rice Farming</a>
+      <a href="machinaryviru.html">🚜 Machinery</a>
+      <a href="fertilizerviru.html">🧪 Fertilizer</a>
+    </div>
+
+    <div class="emission-box">
+      <strong>Dairy Emission:</strong> <span id="dairy">0</span> kg CO₂e/year
+    </div>
+
+    <div class="emission-box">
+      <strong>Livestock Emission:</strong> <span id="livestock">0</span> kg CO₂e/year
+    </div>
+
+    <div class="emission-box">
+      <strong>Rice Farming Emission:</strong> <span id="rice">0</span> kg CO₂e/year
+    </div>
+
+    <div class="emission-box">
+      <strong>Machinery Emission:</strong> <span id="machinery">0</span> kg CO₂e/year
+    </div>
+
+    <div class="emission-box">
+      <strong>Fertilizer & Pesticide Emission:</strong> <span id="fertilizer">0</span> kg CO₂e/year
+    </div>
+
+    <div class="total-box">
+      🌍 Total Emissions: <span id="total">0</span> kg CO₂e/year
+    </div>
+
+    <button class="reset-button" onclick="resetEmissions()">🔄 Reset All Emissions</button>
+  </div>
+
+  <script>
+    function getEmission(key) {
+      const value = localStorage.getItem(key);
+      return value ? parseFloat(value) : 0;
+    }
+
+    function updateDashboard() {
+      const dairy = getEmission('dairyEmission');
+      const livestock = getEmission('livestockEmission');
+      const rice = getEmission('riceEmission');
+      const machinery = getEmission('machineryEmission');
+      const fertilizer = getEmission('fertilizerEmission');
+
+      const total = dairy + livestock + rice + machinery + fertilizer;
+
+      document.getElementById('dairy').textContent = dairy.toFixed(2);
+      document.getElementById('livestock').textContent = livestock.toFixed(2);
+      document.getElementById('rice').textContent = rice.toFixed(2);
+      document.getElementById('machinery').textContent = machinery.toFixed(2);
+      document.getElementById('fertilizer').textContent = fertilizer.toFixed(2);
+      document.getElementById('total').textContent = total.toFixed(2);
+    }
+
+    function resetEmissions() {
+      localStorage.removeItem('dairyEmission');
+      localStorage.removeItem('livestockEmission');
+      localStorage.removeItem('riceEmission');
+      localStorage.removeItem('machineryEmission');
+      localStorage.removeItem('fertilizerEmission');
+      alert("All emission data has been reset.");
+      location.reload();
+    }
+
+    updateDashboard();
+  </script>
+
+</body>
+</html>

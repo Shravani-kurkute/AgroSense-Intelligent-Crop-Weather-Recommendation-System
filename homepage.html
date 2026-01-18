@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CarbonTally offers real-time carbon emissions monitoring using IoT and ESP32 for 7 major industries.">
+  <meta name="keywords" content="Carbon Monitoring, ESP32, Emissions, Sustainability, IoT Sensors, Industry 4.0">
+  <meta name="author" content="Carbontally Team">
+  <meta name="theme-color" content="#4CAF50">
+  <title>AgriPredict</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'Jersey 25';
+      src: url('fonts/jersey-25.woff2') format('woff2'),
+           url('fonts/jersey-25.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    :root {
+      --font-family-jersey-25: 'Jersey 25', sans-serif;
+      --primary-color: #1B5E20;
+      --secondary-color: #81C784;
+      --background-color: #E8F5E9;
+      --text-color: #fff;
+      --neon-glow: #00ffcc;
+      --dark-bg: #0a0a0a;
+      --secondary-neon: #00ccff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+      font-family: var(--font-family-jersey-25);
+      background-color: black;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Header */
+    .header {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      width: 100%;
+      height: 108px;
+      position: relative;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      justify-content: space-between;
+      background-color: transparent;
+    }
+
+    .logo {
+      width: 200px;
+      height: 120px;
+      background-image: url('logo.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: transparent;
+      border-radius: 4px;
+    }
+
+    .brand-name {
+      font-size: 3rem;
+      margin-left: 2rem;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-right: 2rem;
+    }
+
+    .hamburger-menu {
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease;
+    }
+
+    .hamburger-menu:hover {
+      transform: scale(1.1);
+    }
+
+    .icon {
+      font-size: 1.5rem;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      padding-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.5;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1000px;
+      padding: 2rem;
+    }
+
+    .hero-text {
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-align: center;
+      background: linear-gradient(45deg, #4CAF50, #81C784, #B2DFDB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 80%;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtext {
+      font-size: 1.5rem;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+      max-width: 80%;
+      margin-bottom: 2rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .yellow-box {
+      position: absolute;
+      top: calc(100vh  - px);
+      right: 3%;
+      width: 700px;
+      height: 400px;
+      background-color: #4CAF50;
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 5;
+      text-align: center;
+      transform: translateY(-15%);
+    }
+
+    .yellow-box h2 {
+      font-size: 2.5rem;
+      color: #000;
+      margin-bottom: 0rem;
+    }
+
+    .yellow-box p {
+      font-size: 1.6rem;
+      color: #333;
+    }
+
+    .yellow-box a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 1rem 2rem;
+      background-color: #000;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .video-box {
+      width: 50%;
+      max-width: 900px;
+      margin: 2rem;
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      float: left;
+      height: auto;
+    }
+
+    .video-box video {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      margin: 2rem 0;
+      background-color: black;
+      clear: both;
+    }
+
+    .section-title {
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #81C784;
+    }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      justify-items: center;
+    }
+
+    /* Industry Cards Section */
+    .card-hover {
+      border-radius: 20px;
+      width: 250px;
+      height: 350px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 32px -10px rgba(76, 175, 80, 0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: scale(1.05);
+    }
+
+    .card-hover__content {
+      width: 100%;
+      text-align: center;
+      background-color: #4CAF50;
+      padding: 20px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      color: #fff;
+    }
+
+    .card-hover__title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-hover__text {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-hover__link {
+      text-decoration: none;
+      color: #E8F5E9;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.3s ease;
+    }
+
+    .card-hover__link:hover {
+      color: #fff;
+    }
+
+    .card-hover__link svg {
+      width: 16px;
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    .card-hover__link:hover svg {
+      transform: translateX(4px);
+    }
+
+    .card-hover img {
+      width: 100%;
+      height: 70%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    /* How It Works Section */
+    .how-it-works__steps {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .how-it-works__step {
+      flex: 1;
+      min-width: 250px;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .how-it-works__step img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+
+    .how-it-works__step h3 {
+      font-size: 1.5rem;
+      color: #4CAF50;
+      margin-bottom: 0.5rem;
+    }
+
+    .how-it-works__step p {
+      font-size: 1rem;
+      color: #E8F5E9;
+    }
+
+    .how-it-works__architecture {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .how-it-works__architecture img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Features Section */
+    .feature-card {
+      border-radius: 20px;
+      width: 200px;
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px -10px rgba(76, 175, 80, 0.8);
+      transition: transform 0.3s ease;
+      background-color: #4CAF50;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: scale(1.05);
+    }
+
+    .feature-card img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.8rem;
+      color: #E8F5E9;
+    }
+
+    /* Impact Section */
+    .impact__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .impact__stats {
+      font-size: 2rem;
+      color: #4CAF50;
+      margin-bottom: 1rem;
+    }
+
+    .impact__metrics {
+      font-size: 1.2rem;
+      color: #E8F5E9;
+    }
+
+    .impact__testimonials {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .impact__testimonial {
+      background-color: #E8F5E9;
+      padding: 1.5rem;
+      border-radius: 10px;
+      max-width: 300px;
+      text-align: left;
+    }
+
+    .impact__testimonial p {
+      font-size: 0.9rem;
+      color: #1B5E20;
+    }
+
+    .impact__testimonial cite {
+      font-size: 0.8rem;
+      color: #4CAF50;
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    .impact__logos {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .impact__logos img {
+      width: 100px;
+      filter: grayscale(50%);
+      transition: filter 0.3s ease;
+    }
+
+    .impact__logos img:hover {
+      filter: grayscale(0);
+    }
+
+    /* Dashboard Preview Section */
+    .dashboard-preview {
+      text-align: center;
+      background-color: #E8F5E9;
+      padding: 3rem;
+      border-radius: 20px;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+
+    .dashboard-preview canvas {
+      max-width: 100%;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    .dashboard-preview p {
+      font-size: 0.9rem;
+      color: #1B5E20;
+      margin-top: 1rem;
+    }
+
+    /* About Startup Section */
+    .about-startup {
+      padding: 4rem 2rem;
+      background-color: rgba(0, 0, 0, 0.9);
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .about-startup h2 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: #4CAF50;
+    }
+
+    .about-startup p {
+      font-size: 1.5rem;
+      color: #81C784;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+      line-height: 1.6;
+    }
+
+    .about-startup__awards {
+      font-size: 1.2rem;
+      color: #E8F5E9;
+      margin-top: 1rem;
+    }
+
+    /* Futuristic Contact Section */
+    .contact-section {
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1c2526 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.1) 0%, transparent 70%);
+      z-index: 1;
+      animation: pulse 6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.1); }
+      100% { opacity: 0.3; transform: scale(1); }
+    }
+
+    .contact-section h2 {
+      font-size: 3rem;
+      color: var(--neon-glow);
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 0 10px var(--neon-glow), 0 0 20px var(--neon-glow);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-form .form-group {
+      position: relative;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 1rem 1rem 1rem 1.5rem;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      font-size: 1rem;
+      width: 100%;
+      background-color: rgba(10, 10, 10, 0.8);
+      color: #fff;
+      transition: all 0.3s ease;
+      font-family: 'Space Grotesk', sans-serif;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border: 2px solid var(--neon-glow);
+      box-shadow: 0 0 15px var(--neon-glow), 0 0 25px var(--neon-glow);
+      transform: translateY(-2px);
+    }
+
+    .contact-form label {
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      font-size: 1rem;
+      color: var(--secondary-neon);
+      transition: all 0.3s ease;
+      pointer-events: none;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .contact-form input:focus + label,
+    .contact-form input:not(:placeholder-shown) + label,
+    .contact-form textarea:focus + label,
+    .contact-form textarea:not(:placeholder-shown) + label {
+      top: -0.8rem;
+      left: 1rem;
+      font-size: 0.8rem;
+      background-color: var(--dark-bg);
+      padding: 0 0.5rem;
+      color: var(--neon-glow);
+      text-shadow: 0 0 5px var(--neon-glow);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+      max-height: 300px;
+    }
+
+    .contact-form button {
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, var(--neon-glow), var(--secondary-neon));
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+      text-shadow: 0 0 5px #000;
+      box-shadow: 0 0 15px var(--neon-glow);
+    }
+
+    .contact-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px var(--neon-glow), 0 0 35px var(--neon-glow);
+      filter: brightness(1.2);
+    }
+
+    .contact-form button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .contact-form button:hover::after {
+      width: 200px;
+      height: 200px;
+    }
+
+    .form-message {
+      display: none;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      text-align: center;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .form-message.success {
+      display: block;
+      background-color: rgba(0, 255, 204, 0.2);
+      border: 1px solid var(--neon-glow);
+      box-shadow: 0 0 10px var(--neon-glow);
+    }
+
+    .form-message.error {
+      display: block;
+      background-color: rgba(255, 82, 82, 0.2);
+      border: 1px solid #ff5252;
+      box-shadow: 0 0 10px #ff5252;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #1B5E20;
+      padding: 2rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    .footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .footer__links a {
+      color: #E8F5E9;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer__links a:hover {
+      color: #fff;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .video-box {
+        width: 100%;
+        margin: 2rem auto;
+        float: none;
+      }
+
+      .hero-text {
+        font-size: 2.5rem;
+        max-width: 100%;
+      }
+
+      .hero-subtext {
+        font-size: 1.2rem;
+      }
+
+      .yellow-box {
+        width: 90%;
+        height: auto;
+        right: 50%;
+        transform: translate(50%, -35%);
+      }
+
+      .cards-container {
+        grid-template-columns: 1fr;
+      }
+
+      .how-it-works__steps {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-section {
+        padding: 2rem 1rem;
+      }
+
+      .contact-form {
+        padding: 0 1rem;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        font-size: 0.9rem;
+      }
+
+      .contact-form button {
+        font-size: 1rem;
+      }
+
+      .contact-section h2 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .button-91 {
+      color: #fff;
+      padding: 15px 25px;
+      background-color: #4CAF50;
+      background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+      box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+      border-radius: 14px;
+      font-weight: bold;
+      font-size: 16px;
+      border: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    h1 {
+      font-size: 5.25vmin;
+      text-align: center;
+      color: white;
+    }
+
+    p {
+      font-size: max(10pt, 2.5vmin);
+      line-height: 1.4;
+      color: #1B5E20;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Article Card Styles for Call to Action */
+    article {
+      --img-scale: 1.001;
+      --title-css: black;
+      --link-icon-translate: -20px;
+      --link-icon-opacity: 0;
+      position: relative;
+      border-radius: 16px;
+      box-shadow: none;
+      background: #fff;
+      transform-origin: center;
+      transition: all 0.4s ease-in-out;
+      overflow: hidden;
+      height: 500px;
+      width: 400px;
+    }
+
+    article a::after {
+      position: absolute;
+      inset-block: 0;
+      inset-inline: 0;
+      cursor: pointer;
+      content: "";
+    }
+
+    article h2 {
+      margin: 0 0 18px 0;
+      font-family: "Bebas Neue", cursive;
+      font-size: 1.9rem;
+      letter-spacing: 0.06em;
+      color: var(--title-color);
+      transition: color 0.3s ease-out;
+    }
+
+    figure {
+      margin: 0;
+      padding: 0;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+
+    article img {
+      max-width: 100%;
+      transform-origin: center;
+      transform: scale(var(--img-scale));
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .article-body {
+      padding: 24px;
+    }
+
+    article a {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: #1B5E20;
+    }
+
+    article a:focus {
+      outline: 1px dotted #1B5E20;
+    }
+
+    article a .icon {
+      min-width: 24px;
+      width: 24px;
+      height: 24px;
+      margin-left: 5px;
+      transform: translateX(var(--link-icon-translate));
+      opacity: var(--link-icon-opacity);
+      transition: all 0.3s;
+    }
+
+    article:has(:hover, :focus) {
+      --img-scale: 1.1;
+      --title-color: #000000;
+      --link-icon-translate: 0;
+      --link-icon-opacity: 1;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    }
+
+    @media screen and (max-width: 960px) {
+      article {
+        container: card/inline-size;
+      }
+      .article-body p {
+        display: none;
+      }
+    }
+
+    @container card (min-width: 380px) {
+      .article-wrapper {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 16px;
+      }
+      .article-body {
+        padding-left: 0;
+      }
+      figure {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      figure img {
+        height: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+    }
+
+    .sr-only:not(:focus):not(:active) {
+      clip: rect(0 0 0 0); 
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap; 
+      width: 1px;
+    }
+
+    .fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1001;
+    }
+
+    .fullscreen-menu.active {
+      display: flex;
+    }
+
+    .menu-content {
+      text-align: center;
+    }
+
+    .menu-content ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu-content li {
+      margin-bottom: 20px;
+    }
+
+    .menu-content a {
+      color: white;
+      text-decoration: none;
+      font-size: 2rem;
+      transition: color 0.3s ease;
+    }
+
+    .menu-content a:hover {
+      color: #81C784;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 3rem;
+      color: white;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo"></div>
+    <h1 class="brand-name">AgriPredict</h1>
+    <div class="navbar-right">
+      <button class="hamburger-menu" id="menuButton">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <span class="icon material-symbols-outlined" id="profileIcon">person</span>
+      <span class="icon material-symbols-outlined" id="notificationIcon">notifications</span>
+    </div>
+  </header>
+
+  <div class="fullscreen-menu" id="fullscreenMenu">
+    <button class="close-button" id="closeButton">×</button>
+    <div class="menu-content">
+      <ul>
+        <li><a href="http://localhost:8502/">Dashboard</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <video autoplay loop muted playsinline class="hero-video">
+        <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="container hero-content">
+        <div class="hero-text">Real-Time crop yeild and forcasting Monitoring System for a Greener Future</div>
+        <div class="hero-subtext">A hardware + software system that tracks, reports, and helps to take the proper crop.</div>
+        <div class="hero-cta">
+          <a href="demo.html" class="button-91">Book a Demo</a>
+          <a href="/broucher1.pdf" class="button-91">Download Brochure</a>
+          <a href="contact.html" class="button-91">Contact Us</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="yellow-box" style="height: 60%;">
+      <h1 style="font-family: cursive;">Track and Maintain your crop</h1>
+      <p style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">At AgriPredict, we empower farmers to monitor, predict, and maintain crop yeil with real-time data, AI-driven insights, and sustainable solutions.</p>
+      <a href="#">Learn More</a>
+    </div>
+
+    <div class="video-box" style="width: 900px;">
+      <video autoplay loop muted playsinline>
+        <source src="1.mov" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <audio id="hero-audio" preload="auto">
+      <source src="eco_audio.m4a" type="audio/mp3">
+      Your browser does not support the audio tag.
+    </audio>
+    
+    
+
+    <!-- Industry Cards Section -->
+    <section class="section" style="margin-top: 0px;">
+      <h2 class="section-title">What We give</h2>
+      <div class="cards-container">
+        <div class="card-hover">
+          <img src="/front/soil.jpg" alt="Manufacturing">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Crop Recommendation</h3>
+            <p class="card-hover__text">Analyze Soil health and nutrients</p>
+            <a href="http://localhost:8503/" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="card-hover">
+          <img src="/front/wheather.jpg" alt="Logistics & Transportation">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">weather prediction</h3>
+            <p class="card-hover__text">accurate forecasts to prepare for changing weather</p>
+            <a href="http://localhost:8504/" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <!-- <div class="card-hover">
+          <img src="/front/satalite.png" alt="Agriculture">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Satellite Imaging</h3>
+            <p class="card-hover__text">monitor fields from thw space with the satellite imaging</p>
+            <a href="/front/satalite.png" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div> -->
+        <div class="card-hover">
+          <img src="/front/all.png" alt="Energy & Utilities">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Ensemble Prediction</h3>
+            <p class="card-hover__text">powerful combined model</p>
+            <a href="http://localhost:8505/" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="card-hover">
+          <img src="/front/farm_image.png" alt="Construction & Real Estate">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Farmer Alert</h3>
+            <p class="card-hover__text">Get Instant Alert</p>
+            <a href="/new carbon/Construction_Real Estate/homepage.html" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="card-hover">
+          <img src="agriculture.png" alt="Retail & Commercial">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Sustainability</h3>
+            <p class="card-hover__text">Reduce emissions in commercial spaces.</p>
+            <a href="/new_agri/language.html" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="card-hover">
+          <img src="/new_agri/loginbg.png" alt="Chemical & Pharmaceutical">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Yeild Prediction</h3>
+            <p class="card-hover__text">Get the instant yeild Prediction according to the area, season, crop</p>
+            <a href="http://localhost:8501/" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-hover">
+          <img src="datavisualization.jpg" alt="Chemical & Pharmaceutical">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Dashboard</h3>
+            <p class="card-hover__text">Get Instant charts, and graphs</p>
+            <a href="http://localhost:8502/" class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        
+
+        <div class="card-hover">
+          <img src="https://www.shutterstock.com/image-vector/chat-bot-logo-design-concept-600nw-1938811039.jpg" alt="Chemical & Pharmaceutical">
+          <div class="card-hover__content">
+            <h3 class="card-hover__title">Chat-Bot Assistanat</h3>
+            <p class="card-hover__text">get suggestion through the chat assistant by message</p>
+            <a href="http://localhost:8509/ "class="card-hover__link">
+              <span>Learn More</span>
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+    
+
+    
+    <section class="contact-section">
+      <h2>Get in Touch</h2>
+      <form class="contact-form" id="contactForm" action="submit_contact.php" method="POST">
+        <div class="form-group">
+          <input type="text" name="name" id="name" placeholder=" " required>
+          <label for="name">Your Name</label>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" id="email" placeholder=" " required>
+          <label for="email">Your Email</label>
+        </div>
+        <div class="form-group">
+          <textarea name="message" id="message" placeholder=" " required></textarea>
+          <label for="message">Your Message</label>
+        </div>
+        <button type="submit">Send Message</button>
+        <div class="form-message" id="formMessage"></div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const video = document.querySelector('.hero-video');
+      const audio = document.getElementById('hero-audio');
+      const heroSection = document.querySelector('.hero');
+  
+      video.addEventListener('play', () => {
+        if (audio.paused) audio.play();
+      });
+  
+      window.addEventListener('scroll', () => {
+        const rect = heroSection.getBoundingClientRect();
+        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+  
+        if (!isVisible && !audio.paused) {
+          audio.pause();
+          audio.currentTime = 0;
+        } else if (isVisible && video.paused === false && audio.paused) {
+          audio.play();
+        }
+      });
+
+      // Dashboard Preview Simulation
+      const canvas = document.getElementById('dashboardCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#1B5E20';
+      ctx.font = '20px Jersey 25';
+      ctx.fillText('CO₂: 700 ppm', 50, 50);
+      ctx.fillText('PM2.5: 65 µg/m³', 50, 100);
+      ctx.fillText('Emission Trend: 🔽', 50, 150);
+      ctx.strokeStyle = '#4CAF50';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(300, 150);
+      ctx.lineTo(450, 50);
+      ctx.stroke();
+    });
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuButton = document.getElementById('menuButton');
+      const fullscreenMenu = document.getElementById('fullscreenMenu');
+      const closeButton = document.getElementById('closeButton');
+      const contactForm = document.getElementById('contactForm');
+      const formMessage = document.getElementById('formMessage');
+
+      menuButton.addEventListener('click', function () {
+        fullscreenMenu.classList.toggle('active');
+      });
+
+      closeButton.addEventListener('click', function () {
+        fullscreenMenu.classList.remove('active');
+      });
+
+      const profileIcon = document.getElementById('profileIcon');
+      const notificationIcon = document.getElementById('notificationIcon');
+
+      profileIcon.addEventListener('click', function () {
+        alert('Profile clicked!');
+      });
+
+      notificationIcon.addEventListener('click', function () {
+        alert('Notifications clicked!');
+      });
+
+      // Contact Form Validation and Submission
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        // Basic client-side validation
+        if (name.length < 2) {
+          showMessage('Please enter a valid name (minimum 2 characters).', 'error');
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showMessage('Please enter a valid email address.', 'error');
+          return;
+        }
+
+        if (message.length < 10) {
+          showMessage('Please enter a message (minimum 10 characters).', 'error');
+          return;
+        }
+
+        // Simulate form submission (replace with actual API call)
+        setTimeout(() => {
+          showMessage('Thank you for your message! We will get back to you soon.', 'success');
+          contactForm.reset();
+        }, 1000);
+      });
+
+      function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = `form-message ${type}`;
+        formMessage.style.display = 'block';
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>

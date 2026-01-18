@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>धान की खेती उत्सर्जन गणक</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4fcf4;
+      padding: 30px;
+    }
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 650px;
+      margin: auto;
+      box-shadow: 0 0 12px rgba(0, 100, 0, 0.1);
+    }
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button, .btn-dashboard {
+      background-color: #43a047;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    .result {
+      background: #e8f5e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px;
+    }
+    .result strong {
+      color: #1b5e20;
+    }
+    .btn-dashboard {
+      background-color: #2e7d32;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>धान की खेती उत्सर्जन गणक</h2>
+
+    <label for="area">खेती क्षेत्र (हेक्टेयर):</label>
+    <input type="number" id="area" placeholder="हेक्टेयर में क्षेत्र दर्ज करें" required />
+
+    <label for="flooding">जलमग्न अवधि:</label>
+    <select id="flooding">
+      <option value="continuous">निरंतर</option>
+      <option value="intermittent">रुक-रुक कर</option>
+    </select>
+
+    <label for="cropsPerYear">प्रति वर्ष फसलें:</label>
+    <select id="cropsPerYear">
+      <option value="1">एकल</option>
+      <option value="2">दोहरी</option>
+      <option value="3">त्रिगुण</option>
+    </select>
+
+    <label for="fertilizer">उर्वरक उपयोग (किग्रा/हेक्टेयर/वर्ष):</label>
+    <input type="number" id="fertilizer" placeholder="उदा. 100" />
+
+    <label for="fuel">सिंचाई पंपों के लिए ईंधन (लीटर/माह):</label>
+    <input type="number" id="fuel" placeholder="उदा. 50" />
+
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button onclick="calculateRiceEmission()">उत्सर्जन की गणना करें</button>
+      <a href="calculateemission_hindi.html" class="btn-dashboard">← वापस</a>
+    </div>
+
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function calculateRiceEmission() {
+      const area = parseFloat(document.getElementById('area').value) || 0;
+      const flooding = document.getElementById('flooding').value;
+      const crops = parseInt(document.getElementById('cropsPerYear').value) || 0;
+      const fertilizer = parseFloat(document.getElementById('fertilizer').value) || 0;
+      const fuel = parseFloat(document.getElementById('fuel').value) || 0;
+
+      // CH₄ from rice paddies
+      const ch4Factor = flooding === 'continuous' ? 1.5 : 0.9;
+      const ch4 = area * crops * ch4Factor * 60; // simplified kg/year
+
+      // N₂O from fertilizer
+      const n2o = area * (fertilizer * 0.01); // 1% of N converts to N₂O
+
+      // CO₂ from irrigation fuel use
+      const co2 = fuel * 12 * 2.68; // diesel CO₂ emission factor (kg/l)
+
+      const totalCO2e = (ch4 * 25) + (n2o * 298) + co2;
+
+      // Save total CO2e emission to localStorage
+      localStorage.setItem('riceEmission', totalCO2e.toFixed(2));
+
+      document.getElementById('output').innerHTML = `
+        <strong>परिणाम:</strong><br><br>
+        <strong>CH₄ (मीथेन):</strong> ${ch4.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>N₂O (नाइट्रस ऑक्साइड):</strong> ${n2o.toFixed(2)} किग्रा/वर्ष<br>
+        <strong>CO₂ (ईंधन से कार्बन डाइऑक्साइड):</strong> ${co2.toFixed(2)} किग्रा/वर्ष<br><br>
+        <strong>कुल CO₂ समतुल्य (CO₂e):</strong> ${totalCO2e.toFixed(2)} किग्रा/वर्ष
+      `;
+    }
+  </script>
+</body>
+</html>
